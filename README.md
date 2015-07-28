@@ -39,6 +39,8 @@ The bundle is dynamically constructed by invoking d3-bundler on an automatically
 
 It takes about half a second to generate the bundle.
 
+In order for this to work, all listed modules must have entries in `modules.json`, and their Node modules must be installed locally (they should be added as dependencies in `package.json`).
+
 ### Express Server
 
 You can launch the Web server by running:
@@ -48,4 +50,4 @@ npm install
 node index.js
 ```
 
-When you access the URL `http://localhost:3000/select,event`, the text found in [d3-select-event-bundle.js](https://github.com/curran/d3-bundler-ui/blob/master/d3-select-event-bundle.js) is rendered.
+When you access the URL `http://localhost:3000/select,event`, the text found in [d3-select-event-bundle.js](https://github.com/curran/d3-bundler-ui/blob/master/d3-select-event-bundle.js) is rendered. An arbitrary list of comma separated d3 module names can be included.
