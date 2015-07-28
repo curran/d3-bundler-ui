@@ -1,0 +1,22 @@
+{
+  "name": "d3-bundler-ui",
+  "version": "0.0.1",
+  "description": "A Web application for defining custom d3 builds.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curran/d3-bundler-ui.git"
+  },
+  "keywords": [
+    "d3"
+  ],
+  "author": "Curran Kelleher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/curran/d3-bundler-ui/issues"
+  },
+  "homepage": "https://github.com/curran/d3-bundler-ui#readme"
+}

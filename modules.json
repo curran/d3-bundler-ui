@@ -1,0 +1,22 @@
+{
+  "event": {
+    "import": "import { event } from \"d3-selection\";",
+    "export": "get event() { return event; }"
+  },
+  "select": {
+    "import": "import { select } from \"d3-selection\";",
+    "export": "select: select"
+  },
+  "selectAll": {
+    "import": "import { selectAll } from \"d3-selection\";",
+    "export": "selectAll: selectAll"
+  },
+  "selection": {
+    "import": "import { selection } from \"d3-selection\";",
+    "export": "selection: selection"
+  },
+  "transition": {
+    "import": "import { transition } from \"d3-transition\";",
+    "export": "transition: transition"
+  }
+}
