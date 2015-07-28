@@ -1,5 +1,13 @@
 var fs = require("fs");
 
+var exec = require('child_process').exec;
+var cmd = 'prince -v builds/pdf/book.html -o builds/pdf/book.pdf';
+
+var express = require("express");
+var app = express();
+
+var async = require("async");
+
 // Generates the JavaScript code for the top-level D3 bundle.
 // Takes as input an array of module names to include.
 // These module names should correspond with the keys found in the file `modules.json`
@@ -27,18 +35,30 @@ function parseModulesList(modulesList){
   });
 }
 
-var express = require("express");
-var app = express();
+// Generates the D3 bundle using d3-bundler.
+function generateBundle(modulesToInclude, callback){
+
+  // TODO write this file
+  //var indexJS = generateIndexJS(modulesToInclude);
+  
+  var cmd = "./node_modules/.bin/d3-bundler bundle.js";
+  exec(cmd, function(error, stdout, stderr) {
+    callback(stderr, stdout);
+  });
+}
 
 app.get("/:modulesList", function (req, res) {
-  console.log(req.params.modulesList);
-  var modulesToInclude = parseModulesList(req.params.modulesList);
-  var indexJS = generateIndexJS(modulesToInclude);
 
-  res.format({
-    text: function(){
-      res.send(indexJS);
-    }
+  var modulesToInclude = parseModulesList(req.params.modulesList);
+
+  generateBundle(modulesToInclude, function (err, bundleJS){
+    console.log(err);
+    console.log(bundleJS);
+    res.format({
+      js: function(){
+        res.send(bundleJS);
+      }
+    });
   });
 });
 
