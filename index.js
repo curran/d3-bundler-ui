@@ -1,7 +1,6 @@
 var fs = require("fs");
 
-var exec = require('child_process').exec;
-var cmd = 'prince -v builds/pdf/book.html -o builds/pdf/book.pdf';
+var exec = require("child_process").exec;
 
 var express = require("express");
 var app = express();
