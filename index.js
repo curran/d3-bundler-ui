@@ -6,8 +6,6 @@ var cmd = 'prince -v builds/pdf/book.html -o builds/pdf/book.pdf';
 var express = require("express");
 var app = express();
 
-var async = require("async");
-
 // Generates the JavaScript code for the top-level D3 bundle.
 // Takes as input an array of module names to include.
 // These module names should correspond with the keys found in the file `modules.json`
@@ -36,24 +34,42 @@ function parseModulesList(modulesList){
 }
 
 // Generates the D3 bundle using d3-bundler.
-function generateBundle(modulesToInclude, callback){
+var generateBundle = (function (){
 
-  // TODO write this file
-  //var indexJS = generateIndexJS(modulesToInclude);
-  
-  var cmd = "./node_modules/.bin/d3-bundler bundle.js";
-  exec(cmd, function(error, stdout, stderr) {
-    callback(stderr, stdout);
-  });
-}
+  // Use different file names for different requests,
+  // to support concurrent requests.
+  var bundleCounter = 0;
+
+  return function (modulesToInclude, callback){
+
+    var indexJS = generateIndexJS(modulesToInclude);
+    var bundleFileName = "bundle" + bundleCounter + ".js";
+
+    // Make sure it doesn't break after running for centuries.
+    // Did you know that 100000000000000000+1 === 100000000000000000 ?
+    bundleCounter = (bundleCounter + 1) % 1000000000;
+
+    fs.writeFile(bundleFileName, indexJS, function(err) {
+      if(err) { return console.log(err); }
+
+      var cmd = "./node_modules/.bin/d3-bundler " + bundleFileName;
+
+      exec(cmd, function(err, stdout, stderr) {
+        callback(err, stdout);
+
+        // Remove the temporary file
+        exec("rm " + bundleFileName);
+      });
+    }); 
+  }
+}());
 
 app.get("/:modulesList", function (req, res) {
 
   var modulesToInclude = parseModulesList(req.params.modulesList);
 
   generateBundle(modulesToInclude, function (err, bundleJS){
-    console.log(err);
-    console.log(bundleJS);
+    if(err){ return res.send(err); }
     res.format({
       js: function(){
         res.send(bundleJS);
@@ -69,5 +85,6 @@ var server = app.listen(3000, function () {
 
 module.exports = {
   generateIndexJS: generateIndexJS,
+  generateBundle: generateBundle,
   parseModulesList: parseModulesList
 };

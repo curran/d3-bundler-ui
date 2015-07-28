@@ -20,9 +20,10 @@
   },
   "homepage": "https://github.com/curran/d3-bundler-ui#readme",
   "dependencies": {
-    "async": "^1.4.0",
     "d3-bundler": "^0.2.7",
+    "d3-ease": "^0.1.2",
     "d3-selection": "^0.4.7",
+    "d3-transition": "0.0.4",
     "express": "^4.13.1"
   }
 }

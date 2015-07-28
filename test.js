@@ -1,5 +1,6 @@
 var d3BundlerUI = require("./index.js");
 
+var fs = require("fs");
 var assert = require("assert");
 
 describe("d3-ui-bundler", function () {
@@ -26,5 +27,15 @@ describe("d3-ui-bundler", function () {
     var modulesArr = d3BundlerUI.parseModulesList("select,event  , transition");
 
     assert.equal(modulesArr.join(" "), "select event transition");
+  });
+
+  it("should generate a D3 bundle", function(done) {
+
+    var expected = fs.readFileSync("d3-select-event-bundle.js", "utf8");
+
+    d3BundlerUI.generateBundle(["select", "event"], function (err, bundleJS){
+      assert.equal(bundleJS, expected);
+      done();
+    });
   });
 });
