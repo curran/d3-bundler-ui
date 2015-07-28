@@ -34,14 +34,8 @@ npm install
 node index.js
 ```
 
-When you access the URL `http://localhost:3000/select,event`, the following text is rendered:
+When you access the URL `http://localhost:3000/select,event`, the text found in [d3-select-event-bundle.js](https://github.com/curran/d3-bundler-ui/blob/master/d3-select-event-bundle.js) is rendered.
 
-```
-import { select } from "d3-selection";
-import { event } from "d3-selection";
+The bundle is dynamically constructed by invoking d3-bundler on an automatically generated bundle index file.
 
-export default {
-  select: select,
-  get event() { return event; }
-};
-```
+It takes about half a second to generate the bundle.
