@@ -11,7 +11,9 @@
     "url": "git+https://github.com/curran/d3-bundler-ui.git"
   },
   "keywords": [
-    "d3"
+    "d3",
+    "modules",
+    "packages"
   ],
   "author": "Curran Kelleher",
   "license": "MIT",

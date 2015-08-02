@@ -1,4 +1,4 @@
-var d3BundlerUI = require("./index.js");
+var d3BundlerUI = require("../index.js");
 
 var fs = require("fs");
 var assert = require("assert");
@@ -31,7 +31,7 @@ describe("d3-ui-bundler", function () {
 
   it("should generate a D3 bundle", function(done) {
 
-    var expected = fs.readFileSync("d3-select-event-bundle.js", "utf8");
+    var expected = fs.readFileSync("test/d3-select-event-bundle.js", "utf8");
 
     d3BundlerUI.generateBundle(["select", "event"], function (err, bundleJS){
       assert.equal(bundleJS, expected);

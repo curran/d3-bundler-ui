@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="d3-bundler-ui">
+  <head>
+    <meta charset="utf-8">
+    <title>D3 Custom Builds</title>
+    
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+
+    <script src="app.js"></script>
+    
+    <style>
+      .package-name {
+        font-size: 1.3em;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <div class="container">
+      <h1>D3 Custom Bundler</h1>
+      <div ng-controller="ModuleListController as modules">
+        <div ng-repeat="package in modules.packages">
+          <span class="package-name">{{package.name}}</span>
+          <ul class="unstyled">
+            <li ng-repeat="module in package.modules">
+              <input type="checkbox" ng-model="module.included">
+              <span>{{module.name}}</span>
+            </li>
+          </ul>
+        </div>
+        <form ng-submit="modules.build()">
+          <input class="btn" type="submit" value="build">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

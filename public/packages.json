@@ -1,0 +1,26 @@
+[
+  {
+    "name": "d3-selection",
+    "modules": [
+      { "name": "event" },
+      { "name": "select" },
+      { "name": "selectAll" },
+      { "name": "selection" }
+    ]
+  },
+  {
+    "name": "d3-transition",
+    "modules": [
+      { "name": "transition" }
+    ]
+  },
+  {
+    "name": "d3-time-format",
+    "modules": [
+      { "name": "format" },
+      { "name": "utcFormat" },
+      { "name": "localeFormat" },
+      { "name": "isoFormat" }
+    ]
+  }
+]

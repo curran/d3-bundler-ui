@@ -1,15 +1,48 @@
-var fs = require("fs");
+// This file contains the top-level server module.
 
-var exec = require("child_process").exec;
-
+// This program launches an Express server;
 var express = require("express");
 var app = express();
+var port = 3000;
+
+// Serve static files from the `public` directory.
+// This includes the AngularJS app found at `public/index.html`.
+app.use(express.static("public"));
+
+// This program uses temporary files and a child process
+// to invoke the d3-bundler command line tool.
+var fs = require("fs");
+var exec = require("child_process").exec;
+
+////////////////////////////////////////////////////////////////////////////
+//                           Data Loading Service
+////////////////////////////////////////////////////////////////////////////
+
+// This is the data that powers the module selection UI.
+// Found in the `public/data` directory.
+var dataPaths = {
+
+  // This file defines the 2-level hierarchy of modules.
+  // This is used in the front-end code for generating the UI.
+  packages: "data/packages.json",
+
+  // This file contains code snippets for import and export.
+  // This is used in the back-end code for generating the bundle.
+  modules: "data/modules.json"
+};
+
+// Reads the specified JSON file from disk.
+function readJSONFile(path){
+  return JSON.parse(fs.readFileSync(path, "utf8"));
+}
 
 // Generates the JavaScript code for the top-level D3 bundle.
 // Takes as input an array of module names to include.
 // These module names should correspond with the keys found in the file `modules.json`
 var generateIndexJS = (function (){
-  var modules = JSON.parse(fs.readFileSync("modules.json", "utf8"));
+  
+  var modules = readJSONFile(dataPaths.modules);
+
   return function (modulesToInclude){
     return [
       modulesToInclude.map(function (module){
@@ -63,22 +96,28 @@ var generateBundle = (function (){
   }
 }());
 
+////////////////////////////////////////////////////////////////////////////
+//                           Controller
+////////////////////////////////////////////////////////////////////////////
 app.get("/:modulesList", function (req, res) {
 
   var modulesToInclude = parseModulesList(req.params.modulesList);
 
   generateBundle(modulesToInclude, function (err, bundleJS){
-    if(err){ return res.send(err); }
+
+    if(err){
+      return res.send(err);
+    }
+
     res.format({
-      js: function(){
+      "application/javascript": function(){
         res.send(bundleJS);
       }
     });
   });
 });
 
-var server = app.listen(3000, function () {
-  var port = server.address().port;
+var server = app.listen(port, function () {
   console.log("Head on over to http://localhost:" + port + "/select,event,transition");
 });
 
