@@ -1,3 +1,7 @@
+// This is a D3 custom bundle that includes the following modules:
+// - d3.select
+// - d3.event
+
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :

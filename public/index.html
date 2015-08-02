@@ -9,7 +9,7 @@
     <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 
-    <script src="app.js"></script>
+    <script src="controllers/modules.js"></script>
     
     <style>
       .package-name {
@@ -21,7 +21,7 @@
   <body>
     <div class="container">
       <h1>D3 Custom Bundler</h1>
-      <div ng-controller="ModuleListController as modules">
+      <div ng-controller="ModulesController as modules">
         <div ng-repeat="package in modules.packages">
           <span class="package-name">{{package.name}}</span>
           <ul class="unstyled">

@@ -2,7 +2,7 @@ angular.module("d3-bundler-ui", [])
   // TODO refactor this code into several files
   //.factory("packages", function (){
   //})
-  .controller("ModuleListController", ["$http", function($http) {
+  .controller("ModulesController", ["$http", function($http) {
 
     var modules = this;
 

@@ -14,10 +14,6 @@ app.use(express.static("public"));
 var fs = require("fs");
 var exec = require("child_process").exec;
 
-////////////////////////////////////////////////////////////////////////////
-//                           Data Loading Service
-////////////////////////////////////////////////////////////////////////////
-
 // This is the data that powers the module selection UI.
 // Found in the `public/data` directory.
 var dataPaths = {
@@ -92,6 +88,13 @@ var generateBundle = (function (){
     var indexJS = generateIndexJS(modulesToInclude);
     var bundleFileName = "bundle" + bundleCounter + ".js";
 
+    var header = [
+      "// This is a D3 custom bundle that includes the following modules:",
+      modulesToInclude.map(function (module){
+        return "// - d3." + module;
+      }).join("\n")
+    ].join("\n");
+
     // Make sure it doesn't break after running for centuries.
     // Did you know that 100000000000000000+1 === 100000000000000000 ?
     bundleCounter = (bundleCounter + 1) % 1000000000;
@@ -102,7 +105,8 @@ var generateBundle = (function (){
       var cmd = "./node_modules/.bin/d3-bundler " + bundleFileName;
 
       exec(cmd, function(err, stdout, stderr) {
-        callback(err, stdout);
+        var bundle = [header, stdout].join("\n\n");
+        callback(err, bundle);
 
         // Remove the temporary file
         exec("rm " + bundleFileName);
@@ -111,19 +115,14 @@ var generateBundle = (function (){
   }
 }());
 
-////////////////////////////////////////////////////////////////////////////
-//                           Controllers
-////////////////////////////////////////////////////////////////////////////
 app.get("/:modulesList", function (req, res) {
 
   var modulesToInclude = parseModulesList(req.params.modulesList);
 
   generateBundle(modulesToInclude, function (err, bundleJS){
-
     if(err){
       return res.send(err.message);
     }
-
     res.format({
       "application/javascript": function(){
         res.send(bundleJS);
