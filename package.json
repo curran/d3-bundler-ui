@@ -4,7 +4,8 @@
   "description": "A Web application for defining custom d3 builds.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

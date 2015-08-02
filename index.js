@@ -3,7 +3,10 @@
 // This program launches an Express server;
 var express = require("express");
 var app = express();
-var port = 3000;
+
+// This line is adapted from
+// https://github.com/heroku/node-js-getting-started/blob/master/index.js
+var port = (process.env.PORT || 5000);
 
 // Serve static files from the `public` directory.
 // This includes the AngularJS app found at `public/index.html`.

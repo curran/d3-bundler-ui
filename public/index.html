@@ -2,7 +2,7 @@
 <html ng-app="d3-bundler-ui">
   <head>
     <meta charset="utf-8">
-    <title>D3 Custom Builds</title>
+    <title>D3 Builder</title>
     
     <script src="https://code.jquery.com/jquery.min.js"></script>
     <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
@@ -15,14 +15,19 @@
       .package-name {
         font-size: 1.3em;
       }
+      .package-container {
+        display: inline-block;
+        vertical-align: text-top;
+        padding-right: 30px;
+      }
     </style>
     
   </head>
   <body>
     <div class="container">
-      <h1>D3 Custom Bundler</h1>
+      <h1>D3 Builder</h1>
       <div ng-controller="ModulesController as modules">
-        <div ng-repeat="package in modules.packages">
+        <div class="package-container" ng-repeat="package in modules.packages">
           <span class="package-name">{{package.name}}</span>
           <ul class="unstyled">
             <li ng-repeat="module in package.modules">
