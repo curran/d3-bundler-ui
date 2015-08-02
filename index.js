@@ -36,13 +36,12 @@ function readJSONFile(path){
   return JSON.parse(fs.readFileSync(path, "utf8"));
 }
 
+var modules = readJSONFile(dataPaths.modules);
+
 // Generates the JavaScript code for the top-level D3 bundle.
 // Takes as input an array of module names to include.
 // These module names should correspond with the keys found in the file `modules.json`
 var generateIndexJS = (function (){
-  
-  var modules = readJSONFile(dataPaths.modules);
-
   return function (modulesToInclude){
     return [
       modulesToInclude.map(function (module){
@@ -57,6 +56,16 @@ var generateIndexJS = (function (){
     ].join("\n");
   };
 }());
+
+function validate(modulesToInclude){
+  var err = null;
+  modulesToInclude.forEach(function (module){
+    if(!(module in modules)){
+      err = new Error("Unknown module \"" + module + "\"");
+    };
+  });
+  return err;
+}
 
 // Parses a comma-separated list of modules names.
 function parseModulesList(modulesList){
@@ -73,6 +82,12 @@ var generateBundle = (function (){
   var bundleCounter = 0;
 
   return function (modulesToInclude, callback){
+
+    var err = validate(modulesToInclude);
+
+    if(err){
+      return callback(err);
+    }
 
     var indexJS = generateIndexJS(modulesToInclude);
     var bundleFileName = "bundle" + bundleCounter + ".js";
@@ -97,7 +112,7 @@ var generateBundle = (function (){
 }());
 
 ////////////////////////////////////////////////////////////////////////////
-//                           Controller
+//                           Controllers
 ////////////////////////////////////////////////////////////////////////////
 app.get("/:modulesList", function (req, res) {
 
@@ -106,7 +121,7 @@ app.get("/:modulesList", function (req, res) {
   generateBundle(modulesToInclude, function (err, bundleJS){
 
     if(err){
-      return res.send(err);
+      return res.send(err.message);
     }
 
     res.format({
