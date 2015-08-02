@@ -1,7 +1,10 @@
 # d3-bundler-ui
 A Web application for defining custom d3 builds.
 
-WIP, just getting started. So far this project consists of a function that generates JavaScript source code for a D3 bundle given an array of D3 modules names, and a Web server that exposes that functionality.
+[![](http://curran.github.io/images/d3-bundler-ui/prototype.png)](https://dry-tundra-5462.herokuapp.com/)
+[Try it out!](https://dry-tundra-5462.herokuapp.com/)
+
+Work in progress, just getting started.
 
 ### Generating index.js
 
@@ -50,4 +53,6 @@ npm install
 node index.js
 ```
 
-When you access the URL `http://localhost:3000/select,event`, the text found in [d3-select-event-bundle.js](https://github.com/curran/d3-bundler-ui/blob/master/d3-select-event-bundle.js) is rendered. An arbitrary list of comma separated d3 module names can be included.
+When you access the URL `http://localhost:5000/select,event`, the text found in [d3-select-event-bundle.js](https://github.com/curran/d3-bundler-ui/blob/master/d3-select-event-bundle.js) is rendered. An arbitrary list of comma separated d3 module names can be included.
+
+When you access [`http://localhost:5000/`](http://localhost:5000/), you will see the AngularJS user interface for selecting modules to include.
