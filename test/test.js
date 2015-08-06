@@ -29,6 +29,7 @@ describe("d3-ui-bundler", function () {
     assert.equal(modulesArr.join(" "), "select event transition");
   });
 
+  // TODO improve these tests such that each module is tested individually.
   it("should generate a D3 bundle", function(done) {
 
     var expected = fs.readFileSync("test/d3-select-event-bundle.js", "utf8");
