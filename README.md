@@ -57,3 +57,6 @@ node index.js
 When you access the URL `http://localhost:5000/select,event`, the text found in [d3-select-event-bundle.js](https://github.com/curran/d3-bundler-ui/blob/master/d3-select-event-bundle.js) is rendered. An arbitrary list of comma separated d3 module names can be included.
 
 When you access [`http://localhost:5000/`](http://localhost:5000/), you will see the AngularJS user interface for selecting modules to include.
+
+### Please help!
+If you are at all interested in helping make this happen, your help would be greatly appreciated. Check out the [open issues](https://github.com/curran/d3-bundler-ui/issues).
